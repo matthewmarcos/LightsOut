@@ -109,8 +109,9 @@ public class LightsOut {
 	}
 
 
-	public static myButton[][] toggle(myButton[][] button, myButton b) {
+	public static myButton[][] toggle(myButton[][] buttons, myButton b) {
 		int i = b.i, j = b.j;
+		myButton[][] button = buttons; 
 		ArrayList<myButton> toToggle = new ArrayList<myButton>();
 
 		if(i == 0 && j == 0) {
