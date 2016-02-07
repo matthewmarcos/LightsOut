@@ -50,7 +50,8 @@ public class LightsOut {
 				button[i][j].setText("Button" + i + j);
 				button[i][j].addMouseListener(new MouseListener() {
 					public void mouseClicked(MouseEvent ev){
-						toggle((myButton)ev.getSource());
+						myButton[][] temp = toggle(LightsOut.button, (myButton)ev.getSource());
+						LightsOut.button = checkGame(temp);
 					}
 					public void mousePressed(MouseEvent ev){}
 					public void mouseEntered(MouseEvent ev){}
@@ -110,8 +111,7 @@ public class LightsOut {
 	}
 
 
-	public static void toggle(myButton b) {
-
+	public static myButton[][] toggle(myButton[][] button, myButton b) {
 		int i = b.i, j = b.j;
 		ArrayList<myButton> toToggle = new ArrayList<myButton>();
 
@@ -168,11 +168,12 @@ public class LightsOut {
 			s.setSelected(!s.isSelected());
 		}
 
-		checkGame();
+		return button;
+		// return checkGame(button);
 	}
 
 
-	public static void checkGame() {
+	public static myButton[][] checkGame(myButton[][] button) {
 		int numbers = 0;
 		for(int i = 0 ; i < row ; i++) {
 			for(int j = 0 ; j < col ; j++) {
@@ -182,11 +183,11 @@ public class LightsOut {
 			}
 		}
 
-		// System.out.println(numbers);
-
 		if(numbers == 25){
 			endGame();
 		}
+
+		return button;
 	}
 
 
