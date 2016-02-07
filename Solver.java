@@ -11,10 +11,19 @@ import java.io.*;
 
 public class Solver {
 
-	public static ArrayList<myButton[][]> states = 
-	new ArrayList<myButton[][]>();
+	public static ArrayList<State> frontier =  new ArrayList<State>();
 
 	public static void solve(myButton[][] button) {
-		
+		State currentState;
+		frontier.add(new State(button, new int[5][5]));
+		while(!frontier.isEmpty()) {
+			currentState = frontier.remove(0);
+			if(LightsOut.checkGame(currentState.getState())) {
+			// This state is finished.
+				break;
+			}
+		}
+
+		//Do something about current state
 	}
 }

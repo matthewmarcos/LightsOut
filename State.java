@@ -1,11 +1,11 @@
 import java.util.*;
 
 public class State {
-	public int[][] state = new int[5][5];
+	public myButton[][] state = new myButton[5][5];
 	public int[][] actions = new int[5][5];
 	// public ArrayList<Action> actions = new ArrayList<Action>();
 
-	public State(int[][] state, int[][] actions) {
+	public State(myButton[][] state, int[][] actions) {
 		this.state = state;
 		this.actions = actions;
 	}
@@ -26,23 +26,18 @@ public class State {
 
 	public myButton[][] getState () {
 	// Return a board representation with this state
-		myButton[][] button = new myButton[5][5]; 
+		return this.state;
+	}
 
+	public myButton[] getActions () {
+		// return this.actions;
 		for(int i = 0 ; i < 5 ; i++) {
 			for(int j = 0 ; j < 5 ; j++) {
-				if(state[i][j] == 1) {
-					button[i][j] = new myButton(i, j, true);
+				if(actions[i][j] == 1) {
+					tempCost++;
 				}
-				else {
-					button[i][j] = new myButton(i, j, false);
-				}				
 			}
 		}
-
-		return button;
 	}
 
-	public int[][] getActions () {
-		return this.actions;
-	}
 }
