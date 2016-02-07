@@ -15,15 +15,24 @@ public class Solver {
 
 	public static void solve(myButton[][] button) {
 		State currentState = null;
-		frontier.add(new State(button, new int[5][5]));
+		boolean[][] tempActionsDone = new boolean[5][5];
+		for(int i = 0 ; i < 5 ; i++) {
+			for(int j = 0 ; j < 5 ; j++) {
+				tempActionsDone[i][j] = false;
+			}
+		}
+		frontier.add(new State(button, tempActionsDone));
+		int i = 0;
 		while(!frontier.isEmpty()) {
+			i++;
+			System.out.println("Here~" + i);
 			currentState = frontier.remove(0);
-			ArrayList<Action> actions = currentState.getActions();
 			if(LightsOut.checkGame(currentState.getState())) {
 			// This state is finished.
 				break;
 			}
 			else {
+				ArrayList<Action> actions = currentState.getActions();
 				for(Action a : actions) {
 					frontier.add(currentState.doAction(a));
 				}				

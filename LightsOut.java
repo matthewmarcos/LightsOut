@@ -76,7 +76,7 @@ public class LightsOut {
 
 	public static void solve() {
 		// Put state of the board into another object
-		Solver.solve(LightsOut.button);
+		Solver.solve(button);
 	}
 
 	public static boolean randomB() {
