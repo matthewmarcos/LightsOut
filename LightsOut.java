@@ -1,3 +1,8 @@
+// Created by: Joseph Matthew R. Marcos
+// Exercise 2: Solving Lights out with Brute Force
+// CMSC 170 UV-1L
+// 2nd Semester AY 2015-2016
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*; 
@@ -57,7 +62,7 @@ public class LightsOut {
 					public void mouseEntered(MouseEvent ev){}
 					public void mouseReleased(MouseEvent ev){}
 					public void mouseExited(MouseEvent ev){}
-
+ 	
 				});
 
 				panel.add(button[i][j]);
@@ -70,15 +75,22 @@ public class LightsOut {
 	}
 
 	public static void solve() {
+		// Put state of the board into another object
 		int[][] currentState = new int[row][col];
 		System.out.println("Clicked solve");
 		// Get current state of the board
 		for(int i = 0 ; i < row ; i++) {
 			for(int j = 0 ; j < col ; j++) {
-
+				if(LightsOut.button[i][j].isSelected()) {
+					currentState[i][j] = 0;
+				}
+				else {
+					currentState[i][j] = 1;
+				}
 			}
 		}
-		// Put state of the board into another object
+
+		// Solver.solve(currentState);
 	}
 
 	public static boolean randomB() {
