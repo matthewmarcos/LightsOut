@@ -14,18 +14,19 @@ public class Solver {
 	public static ArrayList<State> frontier =  new ArrayList<State>();
 
 	public static void solve(myButton[][] button) {
-		State currentState;
+		State currentState = null;
 		frontier.add(new State(button, new int[5][5]));
 		while(!frontier.isEmpty()) {
 			currentState = frontier.remove(0);
+			ArrayList<Action> actions = currentState.getActions();
 			if(LightsOut.checkGame(currentState.getState())) {
 			// This state is finished.
 				break;
 			}
-			ArrayList<Action> actions = currentState.getActions();
-
-			for(Action a : actions) {
-				frontier.add(currentState.doAction(a));
+			else {
+				for(Action a : actions) {
+					frontier.add(currentState.doAction(a));
+				}				
 			}
 		}
 
@@ -33,7 +34,7 @@ public class Solver {
 		//Do something about current state
 	}
 
-	public void printAnswer(State answer) {
+	public static void printAnswer(State answer) {
 		System.out.println("Answer found");
 	}
 }

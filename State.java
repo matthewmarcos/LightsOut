@@ -15,7 +15,7 @@ public class State {
 		int tempCost = 0;
 		for(int i = 0 ; i < 5 ; i++) {
 			for(int j = 0 ; j < 5 ; j++) {
-				if(actions[i][j] == 1) {
+				if(actionsDone[i][j] == 1) {
 					tempCost++;
 				}
 			}
@@ -48,7 +48,7 @@ public class State {
 		myButton toPress = state[a.getI()][a.getJ()];
 		int[][] actionsDone = this.actionsDone;
 		actionsDone[a.getI()][a.getJ()] = 1;
-		State temp = new State(LightsOut.toggle(this.state, toPress), actionsDone);
+		return new State(LightsOut.toggle(this.state, toPress), actionsDone);
 	}
 
 }

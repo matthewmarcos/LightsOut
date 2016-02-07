@@ -76,21 +76,7 @@ public class LightsOut {
 
 	public static void solve() {
 		// Put state of the board into another object
-		int[][] currentState = new int[row][col];
-		System.out.println("Clicked solve");
-		// Get current state of the board
-		for(int i = 0 ; i < row ; i++) {
-			for(int j = 0 ; j < col ; j++) {
-				if(LightsOut.button[i][j].isSelected()) {
-					currentState[i][j] = 0;
-				}
-				else {
-					currentState[i][j] = 1;
-				}
-			}
-		}
-
-		Solver.solve(currentState);
+		Solver.solve(LightsOut.button);
 	}
 
 	public static boolean randomB() {
