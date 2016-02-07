@@ -90,7 +90,7 @@ public class LightsOut {
 			}
 		}
 
-		// Solver.solve(currentState);
+		Solver.solve(currentState);
 	}
 
 	public static boolean randomB() {

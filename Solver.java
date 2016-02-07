@@ -22,8 +22,18 @@ public class Solver {
 			// This state is finished.
 				break;
 			}
+			ArrayList<Action> actions = currentState.getActions();
+
+			for(Action a : actions) {
+				frontier.add(currentState.doAction(a));
+			}
 		}
 
+		printAnswer(currentState);
 		//Do something about current state
+	}
+
+	public void printAnswer(State answer) {
+		System.out.println("Answer found");
 	}
 }
