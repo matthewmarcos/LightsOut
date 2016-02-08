@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*; 
 import java.util.*;
-
+// JToggleButton
 public class myButton extends JToggleButton {
 	public int i;
 	public int j;

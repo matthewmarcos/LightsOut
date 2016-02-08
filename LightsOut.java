@@ -14,7 +14,7 @@ public class LightsOut {
 	public static int row = 5, col = 5;
 	public static int[][] initialState = new int[row][col];
 	public static Random random = new Random();
-	public static myButton[][] button = new myButton[row][col]; 
+	private static myButton[][] button = new myButton[row][col]; 
 
 	public static void main(String[] args) throws Exception {
 
@@ -33,7 +33,7 @@ public class LightsOut {
 		JButton solver = new JButton("Solve");
 		solver.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent ev){
-				solve();
+				LightsOut.solve();
 			}
 			public void mousePressed(MouseEvent ev){}
 			public void mouseEntered(MouseEvent ev){}
@@ -55,6 +55,7 @@ public class LightsOut {
 				button[i][j].setText("Button" + i + j);
 				button[i][j].addMouseListener(new MouseListener() {
 					public void mouseClicked(MouseEvent ev){
+						((myButton)ev.getSource()).setSelected(!((myButton)ev.getSource()).isSelected());
 						LightsOut.button = toggle(LightsOut.button, (myButton)ev.getSource());
 						if(checkGame(LightsOut.button)) endGame();
 					}
@@ -76,7 +77,7 @@ public class LightsOut {
 
 	public static void solve() {
 		// Put state of the board into another object
-		Solver.solve(button);
+		Solver.solve(LightsOut.button);
 	}
 
 	public static boolean randomB() {
@@ -111,8 +112,10 @@ public class LightsOut {
 
 	public static myButton[][] toggle(myButton[][] buttons, myButton b) {
 		int i = b.i, j = b.j;
+		System.out.println(i + " " + j);
 		myButton[][] button = buttons; 
-		ArrayList<myButton> toToggle = new ArrayList<myButton>();
+		LinkedList<myButton> toToggle = new LinkedList<myButton>();
+		toToggle.add(button[i][j]);
 
 		if(i == 0 && j == 0) {
 			toToggle.add(button[i+1][j]);
@@ -168,7 +171,6 @@ public class LightsOut {
 		}
 
 		return button;
-		// return checkGame(button);
 	}
 
 

@@ -2,12 +2,18 @@ import java.util.*;
 
 public class State {
 	public myButton[][] state = new myButton[5][5];
-	public boolean[][] actionsDone = null;
-	// public ArrayList<Action> actions = new ArrayList<Action>();
+	public boolean[][] actionsDone = new boolean[5][5];
+	// public LinkedList<Action> actions = new LinkedList<Action>();
 
 	public State(myButton[][] state, boolean[][] actions) {
-		this.state = state;
-		this.actionsDone = actions;
+		// this.state = state;
+		for(int i = 0 ; i < 5 ; i++) {
+			for(int j = 0 ; j < 5 ; j++) {
+				this.state[i][j] = new myButton(i, j, state[i][j].isSelected());
+				this.actionsDone[i][j] = !!(actions[i][j]);
+			}
+		}
+		// this.actionsDone = actions;
 	}
 
 	public int getCost () {
@@ -29,16 +35,16 @@ public class State {
 		return this.state;
 	}
 
-	public ArrayList<Action> getActions () {
+	public LinkedList<Action> getActions () {
 		// return this.actions;
 		int x = 0;
-		ArrayList<Action> actions = new ArrayList<Action>();
+		LinkedList<Action> actions = new LinkedList<Action>();
 		for(int i = 0 ; i < 5 ; i++) {
 			for(int j = 0 ; j < 5 ; j++, x++) {
 				if(!actionsDone[i][j]) {
 				// Pwede pang gawin ang action na ito
 					actions.add(new Action(i, j));
-					System.out.println("Action " + x);
+					// System.out.println("Action " + x);
 				}
 			}
 		}
@@ -47,14 +53,61 @@ public class State {
 	}
 
 	public State doAction(Action a) {
+		myButton[][] tempState = new myButton[5][5];
+		boolean[][] tempActionsDone = new boolean[5][5];
+
 		if(this.actionsDone[a.getI()][a.getJ()]) {
 			System.out.println("Cannot pressthis state");
+			return null;
 		}
-		myButton[][] tempState = this.state;
+
+		for(int i = 0 ; i < 5 ; i++) {
+			for(int j = 0 ; j < 5 ; j++) {
+				tempState[i][j] = new myButton(i, j, state[i][j].isSelected());
+			}
+		}
+
+		for(int i = 0 ; i < 5 ; i++) {
+			for(int j = 0 ; j < 5 ; j++) {
+				tempActionsDone[i][j] = !!(this.actionsDone[i][j]);
+			}
+		}
+
 		myButton toPress = tempState[a.getI()][a.getJ()];
-		boolean[][] actionsDone = this.actionsDone;
 		actionsDone[a.getI()][a.getJ()] = true;
-		return new State(LightsOut.toggle(this.state, toPress), actionsDone);
+		State temp = new State(LightsOut.toggle(tempState, toPress), tempActionsDone);
+		// temp.printMe();
+		temp.printActionsDone();
+		return temp;
 	}
 
+	public void printMe() {
+		System.out.println("Board: ");
+		for(int i = 0 ; i < 5 ; i++) {
+			for(int j = 0 ; j < 5 ; j++) {
+				if(state[i][j].isSelected()) {
+					System.out.print("0 ");
+				} else {
+					System.out.print("1 ");
+				}
+			}
+			System.out.println("");
+		}
+		System.out.println("=========");
+	}
+
+	public void printActionsDone() {
+		System.out.println("ActionsDone: ");
+		for(int i = 0 ; i < 5 ; i++) {
+			for(int j = 0 ; j < 5 ; j++) {
+				if(actionsDone[i][j]) {
+					System.out.print("0 ");
+				} else {
+					System.out.print("1 ");
+				}
+			}
+			System.out.println("");
+		}
+		System.out.println("=========");
+	}
 }

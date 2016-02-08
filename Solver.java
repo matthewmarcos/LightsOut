@@ -11,7 +11,7 @@ import java.io.*;
 
 public class Solver {
 
-	public static ArrayList<State> frontier =  new ArrayList<State>();
+	public static LinkedList<State> frontier =  new LinkedList<State>();
 
 	public static void solve(myButton[][] button) {
 		State currentState = null;
@@ -22,19 +22,27 @@ public class Solver {
 			}
 		}
 		frontier.add(new State(button, tempActionsDone));
-		int i = 0;
+		// int i = 0;
 		while(!frontier.isEmpty()) {
-			i++;
-			System.out.println("Here~" + i);
+			// i++;
+			System.out.println("Frontier Size: " + frontier.size());
+			// System.out.println("Here~");
 			currentState = frontier.remove(0);
+
+			LinkedList<Action> actions = currentState.getActions();
+			// System.out.println("Actions Length: " + actions.size());
+
 			if(LightsOut.checkGame(currentState.getState())) {
 			// This state is finished.
+				System.out.println("Break!");
+				currentState.printMe();
 				break;
 			}
 			else {
-				ArrayList<Action> actions = currentState.getActions();
 				for(Action a : actions) {
-					frontier.add(currentState.doAction(a));
+					// frontier.add(currentState.doAction(a));
+					State f = currentState.doAction(a);
+					// f.printMe();
 				}				
 			}
 		}
@@ -45,5 +53,6 @@ public class Solver {
 
 	public static void printAnswer(State answer) {
 		System.out.println("Answer found");
+		answer.printActionsDone();
 	}
 }
