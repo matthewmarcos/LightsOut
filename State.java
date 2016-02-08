@@ -127,7 +127,7 @@ public class State {
 		for(int i = 0 ; i < 5 ; i++) {
 			for(int j = 0 ; j < 5 ; j++) {
 				boolean state = (actionsDone[i][j]) ? true : false;
-				String label = (actionsDone[i][j]) ? "PRESS THIS" : "NOT THIS";
+				String label = (actionsDone[i][j]) ? "PRESS THIS" : "";
 				button[i][j] = new myButton(i, j, !state);
 				button[i][j].setSize(120, 120);
 				// button[i][j].setBackground(Color.RED);

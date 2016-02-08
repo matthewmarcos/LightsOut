@@ -21,7 +21,10 @@ public class Solver {
 				tempActionsDone[i][j] = false;
 			}
 		}
-		frontier.add(new State(button, tempActionsDone));
+
+		State initialState = new State(button, tempActionsDone);
+		initialState.printMe();
+		frontier.add(initialState);
 		while(!frontier.isEmpty()) {
 			currentState = frontier.remove(0);
 
@@ -39,8 +42,9 @@ public class Solver {
 	}
 
 	public static void printAnswer(State answer) {
+	// Answer is a state wherein all lights are off.
 		System.out.println("Answer found");
-		answer.printActionsDone();
+		// answer.printActionsDone();
 		answer.displayTotalActions();
 	}
 }

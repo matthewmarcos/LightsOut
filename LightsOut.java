@@ -16,6 +16,7 @@ public class LightsOut {
 	public static Random random = new Random();
 	public static myButton[][] button = new myButton[row][col]; 
 	public static JFrame frame = new JFrame("LightsOut by Matthew Marcos");
+	public static JPanel panel = new JPanel();
 	
 	public static void main(String[] args) throws Exception {
 
@@ -25,7 +26,6 @@ public class LightsOut {
 		frame.setLayout(new BorderLayout());
 
 		// Panel
-		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(600, 600));
 		panel.setLayout(new GridLayout(row, col));
 
@@ -41,6 +41,7 @@ public class LightsOut {
 					System.out.println("Opening File");
 					//This is where a real application would open the file.
 					LightsOut.initialState = LightsOut.readState(file);
+					LightsOut.redrawBoard();
 					
 				} else {
 					System.out.println("Cancelled Opening");
@@ -99,6 +100,38 @@ public class LightsOut {
 		frame.add(readFileButton, BorderLayout.PAGE_START);
 		// frame.pack();
 		frame.setVisible(true);
+	}
+
+
+	public static void redrawBoard() {
+		LightsOut.panel.removeAll();
+		LightsOut.panel.revalidate();
+		LightsOut.panel.repaint();   // This is required in some cases
+
+
+		for(int i = 0 ; i < row ; i++) {
+			for(int j = 0 ; j < col ; j++) {
+				boolean state = (initialState[i][j] == 1) ? false : true;
+				button[i][j] = new myButton(i, j, state);
+				button[i][j].setSize(120, 120);
+				
+				button[i][j].setText("Button" + i + j);
+				button[i][j].addMouseListener(new MouseListener() {
+					public void mouseClicked(MouseEvent ev){
+						((myButton)ev.getSource()).setSelected(!((myButton)ev.getSource()).isSelected());
+						LightsOut.button = toggle(LightsOut.button, (myButton)ev.getSource());
+						if(checkGame(LightsOut.button)) endGame();
+					}
+					public void mousePressed(MouseEvent ev){}
+					public void mouseEntered(MouseEvent ev){}
+					public void mouseReleased(MouseEvent ev){}
+					public void mouseExited(MouseEvent ev){}
+ 	
+				});
+
+				LightsOut.panel.add(button[i][j]);
+			}
+		}
 	}
 
 	public static void solve() {
