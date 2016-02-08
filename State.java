@@ -128,10 +128,23 @@ public class State {
 			for(int j = 0 ; j < 5 ; j++) {
 				boolean state = (actionsDone[i][j]) ? true : false;
 				String label = (actionsDone[i][j]) ? "PRESS THIS" : "NOT THIS";
-				button[i][j] = new myButton(i, j, state);
+				button[i][j] = new myButton(i, j, !state);
 				button[i][j].setSize(120, 120);
-				
+				// button[i][j].setBackground(Color.RED);
 				button[i][j].setText(label);
+				button[i][j].addMouseListener(new MouseListener() {
+					public void mouseClicked(MouseEvent ev){
+					// Makes the buttons "Untogglable"
+						((myButton)ev.getSource()).setSelected(
+							!((myButton)ev.getSource()).isSelected()
+						);
+					}
+					public void mousePressed(MouseEvent ev){}
+					public void mouseEntered(MouseEvent ev){}
+					public void mouseReleased(MouseEvent ev){}
+					public void mouseExited(MouseEvent ev){}
+ 	
+				});
 
 				frame.add(button[i][j]);
 			}

@@ -26,14 +26,8 @@ public class Solver {
 			currentState = frontier.remove(0);
 
 			LinkedList<Action> actions = currentState.getActions();
-			// System.out.println("Actions Length: " + actions.size());
 
-			if(LightsOut.checkGame(currentState.getState())) {
-			// This state is finished.
-				System.out.println("Break!");
-				currentState.printMe();
-				break;
-			}
+			if(LightsOut.checkGame(currentState.getState())) break; // Finished finding solution
 			else {
 				for(Action a : actions) {
 					frontier.add(currentState.doAction(a));
@@ -41,8 +35,7 @@ public class Solver {
 			}
 		}
 
-		printAnswer(currentState);
-		//Do something about current state
+		printAnswer(currentState); //Do something about current state
 	}
 
 	public static void printAnswer(State answer) {

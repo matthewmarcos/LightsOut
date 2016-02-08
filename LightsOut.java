@@ -14,12 +14,12 @@ public class LightsOut {
 	public static int row = 5, col = 5;
 	public static int[][] initialState = new int[row][col];
 	public static Random random = new Random();
-	private static myButton[][] button = new myButton[row][col]; 
-
+	public static myButton[][] button = new myButton[row][col]; 
+	public static JFrame frame = new JFrame("LightsOut by Matthew Marcos");
+	
 	public static void main(String[] args) throws Exception {
 
 		// Initialize the frame
-		JFrame frame = new JFrame("LightsOut by Matthew Marcos");
 		frame.setSize(new Dimension(600, 620));
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
@@ -28,6 +28,31 @@ public class LightsOut {
 		JPanel panel = new JPanel();
 		panel.setSize(new Dimension(600, 600));
 		panel.setLayout(new GridLayout(row, col));
+
+		// Read File Button
+		JButton readFileButton = new JButton("Read File!");
+		readFileButton.addMouseListener(new MouseListener() {
+			public void mouseClicked(MouseEvent ev){							
+				JFileChooser fc = new JFileChooser();	
+				int returnVal = fc.showOpenDialog(LightsOut.frame);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					System.out.println("Opening File");
+					//This is where a real application would open the file.
+					LightsOut.initialState = LightsOut.readState(file);
+					
+				} else {
+					System.out.println("Cancelled Opening");
+				}
+				
+			}
+			public void mousePressed(MouseEvent ev){}
+			public void mouseEntered(MouseEvent ev){}
+			public void mouseReleased(MouseEvent ev){}
+			public void mouseExited(MouseEvent ev){}
+
+		});
 
 		// Solver button
 		JButton solver = new JButton("Solve");
@@ -43,7 +68,7 @@ public class LightsOut {
 		});
 
 		// Read the initial state of the board
-		initialState = readState("lightsout.in");
+		// initialState = readState(null);
 		
 		// Initialize the board
 		for(int i = 0 ; i < row ; i++) {
@@ -71,6 +96,7 @@ public class LightsOut {
 		}
 		frame.add(panel, BorderLayout.CENTER);
 		frame.add(solver, BorderLayout.PAGE_END);
+		frame.add(readFileButton, BorderLayout.PAGE_START);
 		// frame.pack();
 		frame.setVisible(true);
 	}
@@ -85,21 +111,28 @@ public class LightsOut {
 	}
 
 
-	public static int[][] readState(String fTitle) {
+	public static int[][] readState(File file) {
 		int[][] initialState = new int[row][col];
 		String line;
 		try {
-			FileReader fileReader = new FileReader(fTitle);
+			FileReader fileReader; 
+			if(file == null) {
+				fileReader = new FileReader(file);
+			} else {
+				fileReader = new FileReader("lightsout.in");
+			}
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
-            for(int i = 0 ; i < row ; i++) { 
-            	line = bufferedReader.readLine();
-            	if(line == null) {
+			for(int i = 0 ; i < row ; i++) { 
+				line = bufferedReader.readLine();
+				if(line == null) {
 					break;
-				}               
+				}
 				for(int j = 0 ; j < col ; j++) {
 					initialState[i][j] = line.charAt(j*2) - 48;
+					System.out.print(initialState[i][j] + " ");
 				}
-            }
+				System.out.println("");
+			}
 			bufferedReader.close(); 
 
 		} catch (Exception e) {
