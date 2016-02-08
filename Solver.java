@@ -22,11 +22,7 @@ public class Solver {
 			}
 		}
 		frontier.add(new State(button, tempActionsDone));
-		// int i = 0;
 		while(!frontier.isEmpty()) {
-			// i++;
-			System.out.println("Frontier Size: " + frontier.size());
-			// System.out.println("Here~");
 			currentState = frontier.remove(0);
 
 			LinkedList<Action> actions = currentState.getActions();
@@ -40,9 +36,7 @@ public class Solver {
 			}
 			else {
 				for(Action a : actions) {
-					// frontier.add(currentState.doAction(a));
-					State f = currentState.doAction(a);
-					// f.printMe();
+					frontier.add(currentState.doAction(a));
 				}				
 			}
 		}
@@ -54,5 +48,6 @@ public class Solver {
 	public static void printAnswer(State answer) {
 		System.out.println("Answer found");
 		answer.printActionsDone();
+		answer.displayTotalActions();
 	}
 }

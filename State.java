@@ -1,4 +1,8 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*; 
 import java.util.*;
+import java.io.*;
 
 public class State {
 	public myButton[][] state = new myButton[5][5];
@@ -57,27 +61,27 @@ public class State {
 		boolean[][] tempActionsDone = new boolean[5][5];
 
 		if(this.actionsDone[a.getI()][a.getJ()]) {
-			System.out.println("Cannot pressthis state");
+			System.out.println("Cannot press this state");
 			return null;
 		}
 
 		for(int i = 0 ; i < 5 ; i++) {
 			for(int j = 0 ; j < 5 ; j++) {
 				tempState[i][j] = new myButton(i, j, state[i][j].isSelected());
-			}
-		}
-
-		for(int i = 0 ; i < 5 ; i++) {
-			for(int j = 0 ; j < 5 ; j++) {
-				tempActionsDone[i][j] = !!(this.actionsDone[i][j]);
+				if(this.actionsDone[i][j]) {
+					tempActionsDone[i][j] = true;
+				}
+				else {
+					tempActionsDone[i][j] = false;
+				}
 			}
 		}
 
 		myButton toPress = tempState[a.getI()][a.getJ()];
-		actionsDone[a.getI()][a.getJ()] = true;
+		tempActionsDone[a.getI()][a.getJ()] = true;
 		State temp = new State(LightsOut.toggle(tempState, toPress), tempActionsDone);
 		// temp.printMe();
-		temp.printActionsDone();
+		// temp.printActionsDone();
 		return temp;
 	}
 
@@ -109,5 +113,30 @@ public class State {
 			System.out.println("");
 		}
 		System.out.println("=========");
+	}
+
+
+	public void displayTotalActions() {
+		JFrame frame = new JFrame("LightsOut Solution");
+		myButton[][] button = new myButton[5][5]; 
+		
+		frame.setSize(new Dimension(600, 600));
+		// frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setLayout(new GridLayout(5, 5));
+		// Initialize the answer board
+		for(int i = 0 ; i < 5 ; i++) {
+			for(int j = 0 ; j < 5 ; j++) {
+				boolean state = (actionsDone[i][j]) ? true : false;
+				String label = (actionsDone[i][j]) ? "PRESS THIS" : "NOT THIS";
+				button[i][j] = new myButton(i, j, state);
+				button[i][j].setSize(120, 120);
+				
+				button[i][j].setText(label);
+
+				frame.add(button[i][j]);
+			}
+		}
+		
+		frame.setVisible(true);
 	}
 }

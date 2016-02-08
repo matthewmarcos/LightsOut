@@ -112,7 +112,6 @@ public class LightsOut {
 
 	public static myButton[][] toggle(myButton[][] buttons, myButton b) {
 		int i = b.i, j = b.j;
-		System.out.println(i + " " + j);
 		myButton[][] button = buttons; 
 		LinkedList<myButton> toToggle = new LinkedList<myButton>();
 		toToggle.add(button[i][j]);
